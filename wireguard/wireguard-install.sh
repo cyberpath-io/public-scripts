@@ -1,6 +1,6 @@
 #!/bin/bash
 SERVER_PUB_IP=$(curl -s httpbin.org/ip|grep origin|cut -d '"' -f 4)
-SERVER_PUB_NIC="enX0"
+SERVER_PUB_NIC=$(ip r|grep default| awk '{for(i=1;i<=NF;i++) if($i=="dev") print $(i+1)}')
 SERVER_WG_NIC="wg0"
 SERVER_WG_IPV4=$(ip -4 addr  show $SERVER_PUB_NIC| grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 SERVER_WG_IPV6="fd42:42:42::1"
